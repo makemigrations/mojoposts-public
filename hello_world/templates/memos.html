@@ -1,0 +1,295 @@
+<!--
+Copyright 2025 MakeMigrations
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+{% load django_browser_reload %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Display real-time memo posts with dynamic updates">
+    <meta name="keywords" content="real-time, memo, posts, dynamic updates, streaming">
+    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Memo Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #0d1117; 
+            color: #e2e8f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6a00, #ee0979, #7f00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite alternate;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0%; }
+            100% { background-position: 100%; }
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table { 
+            width: 100%; 
+            max-width: 900px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #161b22;
+            color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+        }
+
+        th, td { 
+            border-bottom: 1px solid #30363d;
+            padding: 12px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #21262d;
+            font-weight: bold;
+        }
+
+        tr:hover { 
+            background-color: #292e36;
+        }
+
+        .memo-column { width: 60%; }
+        .small-column { width: 20%; }
+
+        .loading-row, .no-memos {
+            text-align: center;
+            font-style: italic;
+            color: #e5e5e5;
+        }
+
+        .transparent-table {
+            width: 100%; 
+            max-width: 900px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #020202; 
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styling for the Terms of Use link in the bottom right corner */
+        .links-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .link-item {
+            font-size: 0.8rem; 
+            color: #36383a; 
+            text-decoration: none;
+            background: #161b22;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #202021;
+            box-shadow: 0 2px 5px rgba(33, 32, 33, 0.2);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .link-item:hover {
+            background: #292e36; 
+            color: #ffffff; 
+        }
+
+        @media (max-width: 768px) {
+            table { font-size: 14px; }
+            .header { font-size: 2rem; }
+            .memo-column { width: 55%; }
+            .links-container {
+                flex-direction: column; 
+                gap: 10px;
+            }
+        }
+        .fancy-link {
+            font-size: 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(90deg, #ff6a00, #ee0979, #7f00ff);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 10px rgba(127, 0, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .fancy-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(127, 0, 255, 0.5);
+            background: linear-gradient(90deg, #7f00ff, #ff6a00, #ee0979);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="header">🔥 Memo Demo 🔥</h1>
+    <!-- "How to Post" Link -->
+    <div class="links-container">
+    <a href="/post/" class="link-item fancy-link">✨ How to Post ✨</a>
+    </div>
+    <!-- Fallback for JavaScript -->
+    <noscript>
+        <p style="color: #ff6a00;">JavaScript is required to view memos in real-time. Please enable JavaScript in your browser.</p>
+    </noscript>
+
+    <!-- Memos Table -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col" class="memo-column" aria-sort="none">Memo</th>
+                    <th scope="col" class="small-column" aria-sort="none">Block Height</th>
+                    <th scope="col" class="small-column" aria-sort="none">Amount</th>
+                </tr>
+            </thead>
+            <tbody id="memoTableBody" aria-live="polite">
+                <tr id="loadingRow">
+                    <td colspan="3" class="loading-row">Loading memos...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Transparent Empty Table -->
+    <div class="table-container">
+        <table class="transparent-table">
+            <thead>
+                <!-- Empty thead for consistent size -->
+                <tr>
+                    <th class="memo-column"></th>
+                    <th class="small-column"></th>
+                    <th class="small-column"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Empty tbody -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Terms of Use and Privacy Policy links -->
+    <div class="links-container">
+        <a href="/terms-of-use/" class="link-item">Terms of Use</a>
+        <a href="/privacy-policy/" class="link-item">Privacy Policy</a>
+    </div>
+    <footer style="text-align: center; margin-top: 20px; font-size: 14px; color: rgb(89, 79, 79);">
+        © 2025 MakeMigrations. All Rights Reserved.
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    let eventSource = new EventSource("/stream-memos/");
+    const table = document.getElementById("memoTableBody");
+    let memoList = [];
+    const maxMemos = 50;
+    let loadingRow = document.getElementById("loadingRow");
+    let hasReceivedMemos = false;
+
+    function renderTable() {
+        const fragment = document.createDocumentFragment();
+
+        if (memoList.length === 0) {
+            const row = document.createElement("tr");
+            row.innerHTML = '<td colspan="3" class="no-memos">No memos found</td>';
+            fragment.appendChild(row);
+        } else {
+            memoList.sort((a, b) => b.block_height - a.block_height);
+
+            memoList.forEach((memoData) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${memoData.memo}</td>
+                    <td>${memoData.block_height}</td>
+                    <td>${memoData.amount}</td>
+                `;
+                fragment.appendChild(row);
+            });
+
+            if (memoList.length >= maxMemos) {
+                const loadedRow = document.createElement("tr");
+                loadedRow.innerHTML =
+                    '<td colspan="3" class="loading-row">Loaded newest memos.</td>';
+                fragment.appendChild(loadedRow);
+            }
+        }
+
+        table.innerHTML = "";
+        table.appendChild(fragment);
+    }
+
+    function handleNewMemo(memoData) {
+        if (!hasReceivedMemos) {
+            hasReceivedMemos = true;
+            if (loadingRow) loadingRow.remove();
+        }
+
+        memoList.push(memoData);
+        if (memoList.length > maxMemos) {
+            memoList = memoList.slice(0, maxMemos);
+        }
+        requestIdleCallback(renderTable);
+    }
+
+    eventSource.onmessage = function (event) {
+        const memoData = JSON.parse(event.data);
+        handleNewMemo(memoData);
+    };
+
+    eventSource.onerror = function () {
+        if (!hasReceivedMemos) {
+            console.error("No memos found. Stopping stream.");
+            table.innerHTML =
+                '<tr><td colspan="3" class="no-memos">No memos found</td></tr>';
+            eventSource.close();
+        } else {
+            console.error("EventSource error occurred.");
+            eventSource.close();
+        }
+    };
+});
+
+    </script>
+    
+
+</body>
+</html>

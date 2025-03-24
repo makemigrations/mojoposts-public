@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to Post">
+    <meta name="author" content="">
+    <meta name="theme-color" content="#000000">
+    <title>How to Post</title>
+
+    <!-- Tailwind CSS for consistent styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0d1117;
+            color: #e2e8f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6a00, #ee0979, #7f00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite alternate;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0%;
+            }
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background-color: #161b22;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ff6a00;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                font-size: 2rem;
+            }
+
+            .content-container {
+                padding: 15px;
+            }
+        }
+        .link-item {
+        text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="links-container">
+        <a href="/" class="link-item fancy-link"> Home </a>
+        </div><br>
+    <h1 class="header">How to Post</h1>
+    <div class="content-container">
+        <div class="mb-6 p-4 bg-gray-900 rounded-lg shadow-lg border border-gray-700">
+            <p class="text-lg mb-3">🔗 This website only interacts with the <strong>Chia Blockchain</strong>.</p>
+
+            <div class="p-3 bg-gray-800 rounded-lg border border-gray-600 text-lg">
+                <p>🈷️<strong>Send 1 Mojo to:</strong></p>
+                <p class="mt-2 text-green-400 font-mono break-all">
+                    xch1qr9u00xjrtjucm6xj8vnvlckwxaenfsvuqjqnkvkvqth0rrz6gzqvun8sv
+                </p>
+            </div>
+
+            <p class="mt-4 text-lg">✍️ <strong>Put your text in the memo</strong> of the transaction.<p>(Max 32 characters or the whole memo will not be shown)</p>
+            <p>(No links or urls in the memo, urls will be shown as ' - ' )</p>
+            <p>(Memos may not be shown at our sole discretion)</p>
+            <p>(Your post will be public on the blockchain)</p>
+            <p class="mt-2 text-lg">⏳ In a few seconds after the transaction is confirmed, your memo will appear on the home page.</p>
+        </div>
+
+        <div class="p-4 bg-red-900 rounded-lg border border-red-700 text-white">
+            <p class="text-lg"><strong>⚠ Important Notice:</strong> By using this website, you agree to the terms below.</p>
+        </div>
+        <br>
+
+        <section>
+            <h2>1. There are no refunds.</h2><br>
+            <p>Only send 1 Mojo (0.000000000001 XCH)</p>
+        </section>
+
+        <section>
+            <h2>2. Usage Guidelines</h2><br>
+            <ul>
+                <li>Send 1 mojo via a Chia blockchain transaction to the designated address.</li>
+                <li>Include your desired text message in the memo field.</li>
+                <li>Your text will be displayed on the Site shortly after the transaction is confirmed.</li>
+                <li>There are no refunds for transactions.</li>
+                <li>Links and URL's are not allowed, will be removed from the memo.</li>
+                <li>Maxium 32 characters in the memo, or the whole memo will not be shown.</li>
+                <li>All text must be legal to post. Illegal content will be removed.</li>
+                <li>Users are prohibited from submitting illegal, offensive, defamatory, or otherwise inappropriate content.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>3. By using this site you agree to:</h2><br>
+            <p> The full <a href="/terms-of-use/" class="link-item underline">Terms of Use</a>
+                and <a href="/privacy-policy/" class="link-item underline">Privacy Policy</a>.</p>
+        </section>
+
+        
+    </div>
+    <footer style="text-align: center; margin-top: 20px; font-size: 14px; color: rgb(89, 79, 79);">
+        © 2025 MakeMigrations. All Rights Reserved.
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+{% load django_browser_reload %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Terms of Use">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <meta name="theme-color" content="#000000">
+    <title>{% block title %}{{ title }} | Terms of Use{% endblock %}</title>
+
+    <!-- Tailwind CSS for consistent styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0d1117;
+            color: #e2e8f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6a00, #ee0979, #7f00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite alternate;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0%;
+            }
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background-color: #161b22;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ff6a00; /* Consistent accent color */
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                font-size: 2rem;
+            }
+
+            .content-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="links-container">
+    <a href="/" class="link-item fancy-link"> Home </a>
+    </div><br>
+    <h1 class="header">Terms of Use</h1>
+    
+
+    <div class="content-container">
+        <p><strong>Effective Date:</strong> March 24, 2025</p>
+        <p><strong>Last Updated:</strong> March 24, 2025</p>
+
+        <section>
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing or using this website ("Site"), you agree to comply with and be bound by these Terms of Use. If you do not agree to these terms, please refrain from using the Site.</p>
+        </section>
+
+        <section>
+            <h2>2. Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms of Use at any time. Changes will be posted on this page, and your continued use of the Site constitutes your acceptance of the revised terms.</p>
+        </section>
+
+        <section>
+            <h2>3. Use of the Site</h2>
+            <p>You agree to use the Site for lawful purposes only. You may not:</p>
+            <ul>
+                <li>Engage in any activity that disrupts or interferes with the functionality of the Site.</li>
+                <li>Attempt to gain unauthorized access to any part of the Site.</li>
+                <li>Use the Site to post or distribute any illegal, harmful, or offensive content.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Intellectual Property</h2>
+            <p>All content on the Site, including but not limited to text, images, graphics, logos, and software, is the property of the Site owner or its licensors and is protected by intellectual property laws. You may not use, reproduce, distribute, or modify any content from the Site without explicit written permission.</p>
+        </section>
+
+        <section>
+            <h2>5. Third-Party Links</h2>
+            <p>The Site may contain links to third-party websites or services. We are not responsible for the content, policies, or practices of third-party websites and encourage you to review their terms and privacy policies.</p>
+        </section>
+
+        <section>
+            <h2>6. Limitation of Liability</h2>
+            <p>To the fullest extent permitted by law, the Site owner shall not be liable for any damages arising out of your use or inability to use the Site, including but not limited to indirect, incidental, or consequential damages.</p>
+        </section>
+
+        <section>
+            <h2>7. Disclaimers</h2>
+            <p>The Site is provided "as is" and without warranties of any kind, either express or implied. We do not guarantee the accuracy, reliability, or completeness of any content on the Site.</p>
+        </section>
+
+        <section>
+            <h2>8. Termination</h2>
+            <p>We reserve the right to terminate or suspend access to the Site without prior notice for conduct that we believe violates these Terms of Use or is harmful to other users, us, or third parties.</p>
+        </section>
+
+        <section>
+            <h2>9. Governing Law</h2>
+            <p>These Terms of Use are governed by the laws of Ontario, Canada, without regard to its conflict of law principles.</p>
+        </section>
+
+        <section>
+            <h2>10. Contact Us</h2>
+            <p>If you have any questions about these Terms of Use, you can contact us at:</p>
+            <p>https://x.com/david_decato</p>
+        </section>
+    </div>
+    <footer style="text-align: center; margin-top: 20px; font-size: 14px; color: rgb(89, 79, 79);">
+        © 2025 MakeMigrations. All Rights Reserved.
+    </footer>
+</body>
+
+</html>
+
